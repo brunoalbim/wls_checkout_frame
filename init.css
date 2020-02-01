@@ -1,0 +1,56 @@
+body, html {
+  overflow: hidden;
+}
+.wls-fundomodal-ads80d8as09d8s {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
+    transition: .5s linear all;
+}
+.wls-frame-as76dasf76d7as86d {
+    width: 600px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 100px;
+    z-index: 999999999;
+    background: #fff;
+    margin: 50px auto;
+    border-radius: 15px;
+    transition: .5s linear all;
+    height: 0;
+}
+.wls-fullmodal-as76dasf76d7as86d {
+    width: 100%;
+    border-radius: 0px;
+    height: 100% !important;
+    margin: auto;
+    margin-top:0;
+}
+.wls-buttonclose-da6fd53g8adfss {
+    color: rgb(255, 255, 255);
+    z-index: 9999;
+    position: fixed;
+    top: 14px;
+    left: 10px;
+}
+@media (max-width: 600px) {
+  .wls-frame-as76dasf76d7as86d {
+      width: 500px;
+  }
+}
+@media (max-width: 500px) {
+  .wls-frame-as76dasf76d7as86d {
+      width: 400px;
+  }
+}
+@media (max-width: 400px) {
+  .wls-frame-as76dasf76d7as86d {
+      width: 100%;
+      border-radius: 0 !important;
+  }
+}
