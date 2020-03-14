@@ -1,43 +1,46 @@
-function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-}
-
-function getUrl() {
-  var parametros = window.location.search;
-  parametros = parametros.replace("?", "");
-  parametros = parametros.split("&");
-
-  var data = {};
-  parametros.forEach(function (parte) {
-      var chaveValor = parte.split('=');
-      var chaveUnica = chaveValor[0];
-      var valorUnico = chaveValor[1];
-      data[chaveUnica] = valorUnico;
+$(document).ready(function() {
+    addWlsUtm(); appendInputWls();
   });
-  return data;
-}
 
-function addWlsUtm() {
-    if(getUrl()['utm_campaign']) {
-        if(localStorage.getItem("utm_campaign") === null) {
-            var data = [];
-            data.push(getUrl()['utm_campaign']);
-            data = data.filter(onlyUnique);
-            localStorage.setItem("utm_campaign", JSON.stringify(data));
-        } else {
-            var data = localStorage.getItem("utm_campaign");
-            data = JSON.parse(data);
-            data.push(getUrl()['utm_campaign']);
-            data = data.filter(onlyUnique);
-            localStorage.setItem("utm_campaign", JSON.stringify(data));
-        }
+  function getUrl() {
+    var parametros = window.location.search;
+    parametros = parametros.replace("?", "");
+    parametros = parametros.split("&");
 
-    }
-}
+    var data = {};
+    parametros.forEach(function (parte) {
+        var chaveValor = parte.split('=');
+        var chaveUnica = chaveValor[0];
+        var valorUnico = chaveValor[1];
+        data[chaveUnica] = valorUnico;
+    });
+    return data;
+  }
 
-function appendInputWls(idForm) {
-    if(localStorage.getItem("utm_campaign") !== null) {
-        $(idForm).append('<input name="utm_campaign_wls" style="display:none">');
-        $("input[name='utm_campaign_wls']").val(localStorage.getItem("utm_campaign"));
-    }
-}
+  function addWlsUtm() {
+      if(getUrl()['utm_source'] || getUrl()['utm_medium'] || getUrl()['utm_campaign']) {
+          if(localStorage.getItem("utm_campaign_wls") === null) {
+              var data = [];
+          } else {
+              var data = localStorage.getItem("utm_campaign_wls");
+              data = JSON.parse(data);
+          }
+
+          var includeArray = {
+            utm_source: getUrl()['utm_source'] ? getUrl()['utm_source'] : null,
+            utm_medium: getUrl()['utm_medium'] ? getUrl()['utm_medium'] : null,
+            utm_campaign: getUrl()['utm_campaign'] ? getUrl()['utm_campaign'] : null
+          }
+
+          if (JSON.stringify(data).includes(JSON.stringify(includeArray)) === false) {
+            data.push(includeArray);
+            localStorage.setItem("utm_campaign_wls", JSON.stringify(data));
+          }
+      }
+  }
+
+  function appendInputWls() {
+      if(localStorage.getItem("utm_campaign_wls") !== null && $("input[name='utm_campaign_wls']")) {
+          $("input[name='utm_campaign_wls']").val(localStorage.getItem("utm_campaign_wls"));
+      }
+  }
